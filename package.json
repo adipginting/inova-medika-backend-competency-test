@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "mocha test/**/*.test.js",
+    "test": "mocha dist/test/**/*.test.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts ",
     "build": "tsc",
     "lint": "eslint 'src/**/*.ts'",
-    "start": "node dist/server.js"
+    "start": "node dist/src/server.js"
+
   },
   "repository": {
     "type": "git",
