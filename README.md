@@ -53,7 +53,7 @@ npm run dev
 End point
 ```
 
-{{baseUrl}}/getToken
+POST {{baseUrl}}/getToken
 
 ```
 
@@ -79,7 +79,7 @@ Authentication: Bearer Token
 End point
 ```
 
-{{baseUrl}}/createUser
+POST {{baseUrl}}/createUser
 
 ```
 
@@ -111,7 +111,7 @@ Authentication: Bearer Token
 End point
 ```
 
-{{baseUrl}}/updateUser
+POST {{baseUrl}}/updateUser
 
 ```
 
@@ -141,7 +141,7 @@ Authentication: Bearer Token
 End point
 ```
 
-{{baseUrl}}/listUser/10/1
+GET {{baseUrl}}/listUser/10/1
 
 ```
 
@@ -178,7 +178,7 @@ Authentication: Bearer Token
 End point
 ```
 
-{{baseUrl}}/detailUser/67f1a1d6b5b25d34f1a45f56
+GET {{baseUrl}}/detailUser/67f1a1d6b5b25d34f1a45f56
 
 ```
 
@@ -205,7 +205,7 @@ Authentication: Bearer Token
 End point
 ```
 
-{{baseUrl}}/deleteUser/67f1a1d6b5b25d34f1a45f56
+DELETE {{baseUrl}}/deleteUser/67f1a1d6b5b25d34f1a45f56
 
 ```
 
