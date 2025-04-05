@@ -21,6 +21,7 @@ describe("TokenRepository", () => {
       username: "test",
       password: "test",
     };
+ 
 
     mockTokenRepository = sinon.createStubInstance(TokenRepository);
     tokenService = new TokenService(

@@ -50,9 +50,7 @@ describe("TokenController", () => {
       );
 
       expect(mockResponse.status).to.have.been.calledOnceWith(200);
-      // expect(mockResponse.json).to.have.been.calledOnceWith({
-      //   message: "Token was generated.",
-      // });
+  
     });
   });
 });

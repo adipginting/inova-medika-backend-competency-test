@@ -6,17 +6,24 @@ import cookieParser from "cookie-parser";
 import { TokenController } from "./controllers/token.controller";
 import { TokenService } from "./services/token.service";
 import { TokenRepository } from "./repositories/token.repository";
+import { UserController } from "./controllers/user.controller";
+import { UserService } from "./services/user.service";
+import { UserRepository } from "./repositories/user.repository";
 import { JsonWebTokenError } from "jsonwebtoken";
+import { use } from "chai";
 
 const tokenService = new TokenService(new TokenRepository());
 const tokenController = new TokenController(tokenService);
 
-const app: Application = express();
+const userService = new UserService(new UserRepository());
+const userController = new UserController(userService);
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cors({ credentials: true }));
-app.use(cookieParser());
+const route: Application = express();
+
+route.use(express.urlencoded({ extended: true }));
+route.use(express.json());
+route.use(cors({ credentials: true }));
+route.use(cookieParser());
 
 function authMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
@@ -49,10 +56,15 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-app.get("/", authMiddleware, (req: Request, res: Response) => {
+route.get("/", authMiddleware, (req: Request, res: Response) => {
   res.send("Hello world!");
 });
 
-app.post("/getToken", tokenController.generateToken.bind(tokenController));
+route.post("/getToken", tokenController.generateToken.bind(tokenController));
+route.post(
+  "/createUser",
+  authMiddleware,
+  userController.generateUser.bind(userController)
+);
 
-export default app;
+export default route;

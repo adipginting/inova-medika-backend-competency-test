@@ -4,10 +4,10 @@ import * as argon2 from "argon2";
 
 
 export class TokenService {
-  constructor(private tokenDbRepository: TokenRepository) {}
+  constructor(private tokenRepository: TokenRepository) {}
   public async createToken(cred: IToken) {
     try {
-      const user = await this.tokenDbRepository.checkUser(cred.username);
+      const user = await this.tokenRepository.checkUser(cred.username);
       if (!user) {
         throw new Error("User not found");
       }

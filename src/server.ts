@@ -1,4 +1,4 @@
-import app from "./app";
+import app from "./route";
 import dotenv from "dotenv";
 import { startServer } from "./config/start-server";
 
