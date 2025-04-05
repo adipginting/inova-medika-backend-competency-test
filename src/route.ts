@@ -80,4 +80,10 @@ route.get(
   userController.listUsers.bind(userController)
 );
 
+route.get(
+  "/detailUser/:id",
+  authMiddleware,
+  userController.detailUser.bind(userController)
+);
+
 export default route;

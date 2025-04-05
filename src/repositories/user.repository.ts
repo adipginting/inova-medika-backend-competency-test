@@ -4,6 +4,8 @@ import { IUserResponse } from "../interfaces/userResponse.interface";
 import { User } from "../models/user.model";
 import { hashPassword } from "../utils/hash-password.util";
 
+import { Types } from "mongoose";
+
 export class UserRepository implements IUserRepository {
   public async createUser(userDto: UserDTO): Promise<boolean> {
     try {
@@ -103,11 +105,9 @@ export class UserRepository implements IUserRepository {
   //   throw new Error("Method not implemented.");
   // }
 
-  public async detailUser(
-    id: string
-  ): Promise<IUserResponse | null> {
+  public async detailUser(id: string): Promise<IUserResponse | null> {
     try {
-      const user = await User.findOne({_id: id});
+      const user = await User.findOne({ _id: id });
 
       if (user) {
         return {
@@ -117,7 +117,7 @@ export class UserRepository implements IUserRepository {
           status: user.status,
           username: user.username,
           gender: user.gender,
-        }
+        };
       } else {
         throw new Error("User not found");
       }
