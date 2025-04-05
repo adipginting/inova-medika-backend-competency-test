@@ -35,7 +35,7 @@ Untuk menjalankan testing. Setelah program di-build, jalankan
 npm run test
 
 ```
-Ubah file dot-env menjadi .env agar isi 
+Ubah file dot-env menjadi .env agar field-field di file tersebut dapat di-load oleh program.
 ```
 
 mv dot-env .env
