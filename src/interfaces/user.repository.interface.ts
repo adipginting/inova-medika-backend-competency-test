@@ -6,7 +6,7 @@ export interface IUserRepository {
   findEmail(email: string): Promise<boolean>;
   findUsername(username: string): Promise<boolean>;
   updateUser(userDto: UserDTO): Promise<boolean>;
-  // deleteUser(userId: string): Promise<string>;
+  deleteUser(userId: string): Promise<IUserResponse | null>;
   listUsers(limit: number, offset: number): Promise<IUserResponse[]>;
   detailUser(userId: string): Promise<IUserResponse | null>;
 }

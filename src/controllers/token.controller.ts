@@ -21,9 +21,6 @@ export class TokenController {
           { expiresIn: "10m" }
         );
         res.status(200).json({ token: token });
-        // res.cookie("jwt", token, {
-        //   httpOnly: true,
-        // });
       }
     } catch (error) {
       res.status(500).json({

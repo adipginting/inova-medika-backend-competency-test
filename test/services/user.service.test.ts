@@ -16,15 +16,6 @@ describe("User Service", () => {
   let userService: UserService;
 
   beforeEach(() => {
-    mockUserDto = {
-      username: "test",
-      name: "test",
-      email: "test",
-      gender: "male",
-      password: "test",
-      status: "active",
-    };
-
     mockUserRepository = sinon.createStubInstance(UserRepository);
     userService = new UserService(
       mockUserRepository as unknown as UserRepository
@@ -37,6 +28,15 @@ describe("User Service", () => {
 
   describe("User tests", () => {
     it("should call UserRepository.getUser", async () => {
+      mockUserDto = {
+        username: "test",
+        name: "test",
+        email: "test",
+        gender: "male",
+        password: "test",
+        status: "active",
+      };
+
       mockUserRepository.createUser.resolves(true);
 
       await userService.createUser(mockUserDto);
@@ -45,11 +45,29 @@ describe("User Service", () => {
       );
     });
 
-    it("should return true if user created", async () => {
+    it("should return true if user created with username", async () => {
       mockUserRepository.createUser.resolves(true);
 
       const result = await userService.createUser(mockUserDto);
       expect(result).to.be.true;
+    });
+
+    it("should return true if user created without username", async () => {
+      mockUserDto = {
+        name: "test",
+        email: "test",
+        gender: "male",
+        password: "test",
+        status: "active",
+      };
+      mockUserRepository.createUser.resolves(true);
+
+      const result = await userService.createUser(mockUserDto);
+      expect(result).to.be.true;
+
+      expect(mockUserRepository.createUser).to.have.been.calledOnceWith(
+        mockUserDto
+      );
     });
 
     it("should return true if user updated", async () => {
@@ -98,7 +116,27 @@ describe("User Service", () => {
       mockUserRepository.detailUser.resolves(mockUserResponse);
       const result = await userService.detailUser("test-1");
       expect(result).to.be.deep.equal(mockUserResponse);
-      expect(mockUserRepository.detailUser).to.have.been.calledOnceWith("test-1");
+      expect(mockUserRepository.detailUser).to.have.been.calledOnceWith(
+        "test-1"
+      );
+    });
+
+    it("should delete user", async () => {
+      const mockUserResponse: IUserResponse = {
+        id: "test-1",
+        username: "test1",
+        name: "test",
+        email: "test1@test.com",
+        gender: "male",
+        status: "active",
+      };
+
+      mockUserRepository.deleteUser.resolves(mockUserResponse);
+      const result = await userService.deleteUser("test-1");
+      expect(result).to.be.deep.equal(mockUserResponse);
+      expect(mockUserRepository.deleteUser).to.have.been.calledOnceWith(
+        "test-1"
+      );
     });
   });
 });

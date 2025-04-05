@@ -4,8 +4,6 @@ import { IUserResponse } from "../interfaces/userResponse.interface";
 import { User } from "../models/user.model";
 import { hashPassword } from "../utils/hash-password.util";
 
-import { Types } from "mongoose";
-
 export class UserRepository implements IUserRepository {
   public async createUser(userDto: UserDTO): Promise<boolean> {
     try {
@@ -101,9 +99,31 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  // deleteUser(userId: string): Promise<string> {
-  //   throw new Error("Method not implemented.");
-  // }
+  public async deleteUser(id: string): Promise<IUserResponse | null> {
+    try {
+      const user = await User.findOne({ _id: id });
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const deleted = await User.deleteOne({ _id: id });
+      if (deleted.deletedCount === 0) {
+        throw new Error("User not deleted");
+      }
+
+      return {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        status: user.status,
+        username: user.username,
+        gender: user.gender,
+      };
+    } catch (error) {
+      console.error("Error to delete user:", error);
+      throw new Error("Failed to delete user");
+    }
+  }
 
   public async detailUser(id: string): Promise<IUserResponse | null> {
     try {

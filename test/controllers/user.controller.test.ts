@@ -267,3 +267,57 @@ describe("Test Detail User", () => {
     });
   });
 });
+
+describe("Test Delete User", () => {
+  let mockRequest: Partial<Request>;
+  let mockResponse: Partial<Response>;
+  let mockUserService: sinon.SinonStubbedInstance<UserService>;
+  let mockUserRepository: sinon.SinonStubbedInstance<UserRepository>;
+  let userController: UserController;
+
+  beforeEach(() => {
+    mockRequest = {
+      params: {
+        id: "test-1",
+      },
+    };
+    mockResponse = { status: sinon.stub().returnsThis(), json: sinon.stub() };
+    mockUserService = sinon.createStubInstance(UserService);
+    mockUserRepository = sinon.createStubInstance(UserRepository);
+    userController = new UserController(
+      mockUserService as unknown as UserService,
+      mockUserRepository as unknown as UserRepository
+    );
+  });
+
+  afterEach(() => {
+    sinon.restore();
+  });
+
+  describe("Delete User", () => {
+    it("should return a 200 status if user deleted", async () => {
+      const mockUserResponse: IUserResponse = {
+        id: "test-1",
+        username: "test1",
+        name: "test",
+        email: "test1@test.com",
+        gender: "male",
+        status: "active",
+      };
+
+      mockUserService.deleteUser.resolves(mockUserResponse);
+
+      await userController.deleteUser(
+        mockRequest as Request,
+        mockResponse as Response
+      );
+
+      expect(mockResponse.status).to.have.been.calledOnceWith(200);
+      expect(mockResponse.json).to.have.been.calledOnceWith({
+        success: true,
+        message: "User deleted.",
+        data: mockUserResponse,
+      });
+    });
+  });
+});

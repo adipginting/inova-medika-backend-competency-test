@@ -49,8 +49,21 @@ export class UserService {
       }
       throw new Error("No users found");
     } catch (error) {
-      console.error("Error listing users", error);
-      throw new Error("Error listing users");
+      console.error("Error showing user", error);
+      throw new Error("Error showing");
+    }
+  }
+
+  public async deleteUser(id: string) {
+    try {
+      const user = await this.userRepository.deleteUser(id);
+      if (user) {
+        return user;
+      }
+      throw new Error("No users found");
+    } catch (error) {
+      console.error("Error deleting user", error);
+      throw new Error("Error deleting user");
     }
   }
 }

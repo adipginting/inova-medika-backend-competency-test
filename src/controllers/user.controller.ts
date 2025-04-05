@@ -125,9 +125,7 @@ export class UserController {
   public async detailUser(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const user = await this.userService.detailUser(
-        id
-      );
+      const user = await this.userService.detailUser(id);
       if (user) {
         res.status(200).json({
           success: true,
@@ -149,5 +147,28 @@ export class UserController {
     }
   }
 
-
+  public async deleteUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const user = await this.userService.deleteUser(id);
+      if (user) {
+        res.status(200).json({
+          success: true,
+          message: "User deleted.",
+          data: user,
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "No user deleted.",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message:
+          error instanceof Error ? error.message : "An unknown error occured.",
+      });
+    }
+  }
 }

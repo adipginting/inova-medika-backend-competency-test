@@ -86,4 +86,10 @@ route.get(
   userController.detailUser.bind(userController)
 );
 
+route.delete(
+  "/deleteUser/:id",
+  authMiddleware,
+  userController.deleteUser.bind(userController)
+);
+
 export default route;
