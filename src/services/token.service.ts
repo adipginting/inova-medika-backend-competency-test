@@ -1,10 +1,10 @@
 import { IToken } from "../interfaces/token.interface";
-import { TokenDbRepository } from "../db-repository/token.db-repository";
+import { TokenRepository } from "../repositories/token.repository";
 import * as argon2 from "argon2";
 
 
 export class TokenService {
-  constructor(private tokenDbRepository: TokenDbRepository) {}
+  constructor(private tokenDbRepository: TokenRepository) {}
   public async createToken(cred: IToken) {
     try {
       const user = await this.tokenDbRepository.checkUser(cred.username);

@@ -1,7 +1,7 @@
 import { ITokenService } from "../interfaces/token.service.interface";
 import { User } from "../models/user.model";
 
-export class TokenDbRepository implements ITokenService {
+export class TokenRepository implements ITokenService {
   public async checkUser(
     username: string
   ): Promise<{ username: string; password: string } | null> {

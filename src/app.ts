@@ -4,9 +4,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { TokenController } from "./controllers/token.controller";
 import { TokenService } from "./services/token.service";
-import { TokenDbRepository } from "./db-repository/token.db-repository";
+import { TokenRepository } from "./repositories/token.repository";
 
-const tokenService = new TokenService(new TokenDbRepository());
+const tokenService = new TokenService(new TokenRepository());
 const tokenController = new TokenController(tokenService);
 
 const app: Application = express();

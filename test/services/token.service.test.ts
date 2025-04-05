@@ -1,28 +1,30 @@
 import { expect } from "chai";
-import { Request, Response } from "express";
 import chai from "chai";
 import sinon from "sinon";
 import sinonChai from "sinon-chai";
-import { TokenController } from "../../src/controllers/token.controller";
-
 import { TokenService } from "../../src/services/token.service";
+import { TokenRepository } from "../../src/repositories/token.repository";
+import { IToken } from "../../src/interfaces/token.interface";
+import * as argon2 from "argon2";
+import e from "express";
 
 chai.use(sinonChai);
 
-describe("TokenController", () => {
-  let mockRequest: Partial<Request>;
-  let mockResponse: Partial<Response>;
-  let mockTokenService: sinon.SinonStubbedInstance<TokenService>;
-  let tokenController: TokenController;
+describe("TokenRepository", () => {
+  let mockCred: IToken;
+
+  let mockTokenRepository: sinon.SinonStubbedInstance<TokenRepository>;
+  let tokenService: TokenService;
 
   beforeEach(() => {
-    mockRequest = {
-      body: { username: "", password: "" },
+    mockCred = {
+      username: "test",
+      password: "test",
     };
-    mockResponse = { status: sinon.stub().returnsThis(), json: sinon.stub() };
-    mockTokenService = sinon.createStubInstance(TokenService);
-    tokenController = new TokenController(
-      mockTokenService as unknown as TokenService
+
+    mockTokenRepository = sinon.createStubInstance(TokenRepository);
+    tokenService = new TokenService(
+      mockTokenRepository as unknown as TokenRepository
     );
   });
 
@@ -30,29 +32,28 @@ describe("TokenController", () => {
     sinon.restore();
   });
 
-  describe("getToken", () => {
-    it("should call tokenService.getToken", async () => {
-      await tokenController.generateToken(
-        mockRequest as Request,
-        mockResponse as Response
-      );
-      expect(mockTokenService.createToken).to.have.been.calledOnceWith({
-        username: "",
-        password: "",
+  describe("Check username and password.", () => {
+    it("should call TokenRepository.getToken", async () => {
+      mockTokenRepository.checkUser.resolves({
+        username: "test",
+        password: await argon2.hash(mockCred.password),
       });
+
+      await tokenService.createToken(mockCred);
+      expect(mockTokenRepository.checkUser).to.have.been.calledOnceWith(
+        mockCred.username
+      );
     });
 
-    it("should return a 200 status if token generated", async () => {
-      mockTokenService.createToken.resolves(true);
-      await tokenController.generateToken(
-        mockRequest as Request,
-        mockResponse as Response
-      );
+    it("should return boolean if token generated", async () => {
+      mockTokenRepository.checkUser.resolves({
+        username: "test",
+        password: await argon2.hash(mockCred.password),
+      });
 
-      expect(mockResponse.status).to.have.been.calledOnceWith(200);
-      // expect(mockResponse.json).to.have.been.calledOnceWith({
-      //   message: "Token was generated.",
-      // });
+      const result = await tokenService.createToken(mockCred);
+
+      expect(result).to.be.true;
     });
   });
 });
