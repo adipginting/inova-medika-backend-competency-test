@@ -1,17 +1,9 @@
 import { User } from "../models/user.model";
 import { IUser } from "../interfaces/user.interface";
-import * as argon2 from "argon2";
 import mongoose from "mongoose";
+import { hashPassword } from "../utils/hash-password.util";
 
-async function hashPassword(password: string) {
-  try {
-    const hash = await argon2.hash(password);
-    return hash;
-  } catch (e) {
-    console.error("Password hash failed ", e);
-    return "";
-  }
-}
+
 
 export const seed = async (): Promise<void> => {
   try {

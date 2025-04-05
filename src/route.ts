@@ -15,8 +15,9 @@ import { use } from "chai";
 const tokenService = new TokenService(new TokenRepository());
 const tokenController = new TokenController(tokenService);
 
-const userService = new UserService(new UserRepository());
-const userController = new UserController(userService);
+const userRepository = new UserRepository();
+const userService = new UserService(userRepository);
+const userController = new UserController(userService, userRepository);
 
 const route: Application = express();
 
@@ -64,7 +65,13 @@ route.post("/getToken", tokenController.generateToken.bind(tokenController));
 route.post(
   "/createUser",
   authMiddleware,
-  userController.generateUser.bind(userController)
+  userController.createUser.bind(userController)
+);
+
+route.post(
+  "/updateUser",
+  authMiddleware,
+  userController.updateUser.bind(userController)
 );
 
 export default route;

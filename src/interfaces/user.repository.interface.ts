@@ -2,12 +2,9 @@ import { UserDTO } from "../dtos/user.dto";
 
 export interface IUserRepository {
   createUser(userDto: UserDTO): Promise<boolean>;
-  // updateUser(userInfo: {
-  //   name: string;
-  //   gender: string;
-  //   email: string;
-  //   status: boolean;
-  // }): Promise<string>;
+  findEmail(email: string): Promise<boolean>;
+  findUsername(username: string): Promise<boolean>;
+  updateUser(userDto: UserDTO): Promise<boolean>;
   // deleteUser(userId: string): Promise<string>;
   // listUser(username: string): Promise<IUserService[]>;
   // detailUser(userId: string): Promise<IUserService>;

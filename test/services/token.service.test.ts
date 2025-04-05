@@ -6,7 +6,6 @@ import { TokenService } from "../../src/services/token.service";
 import { TokenRepository } from "../../src/repositories/token.repository";
 import { IToken } from "../../src/interfaces/token.interface";
 import * as argon2 from "argon2";
-import e from "express";
 
 chai.use(sinonChai);
 

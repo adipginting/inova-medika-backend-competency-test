@@ -19,9 +19,9 @@ describe("UserRepository", () => {
       username: "test",
       name: "test",
       email: "test",
-      gender: "test",
+      gender: "male",
       password: "test",
-      status: true,
+      status: "active",
     };
 
     mockUserRepository = sinon.createStubInstance(UserRepository);
@@ -34,7 +34,7 @@ describe("UserRepository", () => {
     sinon.restore();
   });
 
-  describe("Check username and password.", () => {
+  describe("User tests", () => {
     it("should call UserRepository.getUser", async () => {
       mockUserRepository.createUser.resolves(true);
 
@@ -48,6 +48,12 @@ describe("UserRepository", () => {
       mockUserRepository.createUser.resolves(true);
 
       const result = await userService.createUser(mockUserDto);
+      expect(result).to.be.true;
+    });
+
+    it("should return true if user updated", async () => {
+      mockUserRepository.updateUser.resolves(true);
+      const result = await userService.updateUser(mockUserDto);
       expect(result).to.be.true;
     });
   });

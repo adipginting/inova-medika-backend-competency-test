@@ -15,4 +15,17 @@ export class UserService {
       throw new Error("Error creating user");
     }
   }
+
+  public async updateUser(userDto: UserDTO) {
+    try {
+      const isUserUpdated = await this.userRepository.updateUser(userDto);
+      if (isUserUpdated) {
+        return true;
+      }
+      throw new Error("User not updated");
+    } catch (error) {
+      console.error("Error updating user", error);
+      throw new Error("Error updating user");
+    }
+  }
 }
