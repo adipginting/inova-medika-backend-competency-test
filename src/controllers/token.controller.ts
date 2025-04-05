@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { TokenService } from "../services/token.service";
+import * as jwt from "jsonwebtoken";
 
 export class TokenController {
   constructor(private tokenService: TokenService) {}
@@ -7,11 +8,22 @@ export class TokenController {
     try {
       const username: string = req.body.username;
       const password: string = req.body.password;
-      if (
-        (await this.tokenService.createToken({ username, password })) ===
-        "token"
-      ) {
-        res.status(200).json({ message: "Token was generated." });
+
+      const isValid = await this.tokenService.createToken({
+        username,
+        password,
+      });
+
+      if (isValid) {
+        const token = jwt.sign(
+          { username: username },
+          process.env.JWT_SECRET || "secret",
+          { expiresIn: "10m" }
+        );
+        res.status(200).json({ token: token });
+        // res.cookie("jwt", token, {
+        //   httpOnly: true,
+        // });
       }
     } catch (error) {
       res.status(500).json({

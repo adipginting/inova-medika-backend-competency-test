@@ -6,8 +6,8 @@ export interface IUser {
   name: string;
   email: string;
   gender: string;
-  status: boolean;
-  password: string,
+  password: string;
+  status?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
