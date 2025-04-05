@@ -74,4 +74,10 @@ route.post(
   userController.updateUser.bind(userController)
 );
 
+route.get(
+  "/listUser/:limit/:offset",
+  authMiddleware,
+  userController.listUsers.bind(userController)
+);
+
 export default route;

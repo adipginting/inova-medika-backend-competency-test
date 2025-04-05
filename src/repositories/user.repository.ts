@@ -1,5 +1,6 @@
 import { UserDTO } from "../dtos/user.dto";
 import { IUserRepository } from "../interfaces/user.repository.interface";
+import { IUserResponse } from "../interfaces/userResponse.interface";
 import { User } from "../models/user.model";
 import { hashPassword } from "../utils/hash-password.util";
 
@@ -72,13 +73,57 @@ export class UserRepository implements IUserRepository {
       throw new Error("Failed to create user");
     }
   }
+
+  public async listUsers(
+    limit: number,
+    offset: number
+  ): Promise<IUserResponse[]> {
+    try {
+      const result = await User.find({}).limit(limit).skip(offset);
+
+      if (result) {
+        return result.map((user) => ({
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          status: user.status,
+          username: user.username,
+          gender: user.gender,
+        }));
+      } else {
+        throw new Error("Users not found");
+      }
+    } catch (error) {
+      console.error("Error to list users:", error);
+      throw new Error("Failed to list users");
+    }
+  }
+
   // deleteUser(userId: string): Promise<string> {
   //   throw new Error("Method not implemented.");
   // }
-  // listUser(username: string): Promise<IUserService[]> {
-  //   throw new Error("Method not implemented.");
-  // }
-  // detailUser(userId: string): Promise<IUserService> {
-  //   throw new Error("Method not implemented.");
-  // }
+
+  public async detailUser(
+    id: string
+  ): Promise<IUserResponse | null> {
+    try {
+      const user = await User.findOne({_id: id});
+
+      if (user) {
+        return {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          status: user.status,
+          username: user.username,
+          gender: user.gender,
+        }
+      } else {
+        throw new Error("User not found");
+      }
+    } catch (error) {
+      console.error("Error to show user:", error);
+      throw new Error("Failed to show user");
+    }
+  }
 }

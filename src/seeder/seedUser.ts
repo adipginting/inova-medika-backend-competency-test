@@ -16,7 +16,7 @@ export const seed = async (): Promise<void> => {
       name: "timInova",
       email: "test@test.com",
       gender: "male",
-      status: true,
+      status: "active",
       password: await hashPassword("1Team1Semangat1Tujuan"),
     };
 

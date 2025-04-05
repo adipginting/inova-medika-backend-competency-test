@@ -28,4 +28,29 @@ export class UserService {
       throw new Error("Error updating user");
     }
   }
+
+  public async listUsers(limit: number, offset: number) {
+    try {
+      const users = await this.userRepository.listUsers(limit, offset);
+      if (users) {
+        return users;
+      }
+      throw new Error("No users found");
+    } catch (error) {
+      console.error("Error listing users", error);
+      throw new Error("Error listing users");
+    }
+  }
+  public async detailUser(id: string) {
+    try {
+      const user = await this.userRepository.detailUser(id);
+      if (user) {
+        return user;
+      }
+      throw new Error("No users found");
+    } catch (error) {
+      console.error("Error listing users", error);
+      throw new Error("Error listing users");
+    }
+  }
 }

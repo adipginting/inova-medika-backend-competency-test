@@ -1,4 +1,5 @@
 import { UserDTO } from "../dtos/user.dto";
+import { IUserResponse } from "./userResponse.interface";
 
 export interface IUserRepository {
   createUser(userDto: UserDTO): Promise<boolean>;
@@ -6,6 +7,6 @@ export interface IUserRepository {
   findUsername(username: string): Promise<boolean>;
   updateUser(userDto: UserDTO): Promise<boolean>;
   // deleteUser(userId: string): Promise<string>;
-  // listUser(username: string): Promise<IUserService[]>;
-  // detailUser(userId: string): Promise<IUserService>;
+  listUsers(limit: number, offset: number): Promise<IUserResponse[]>;
+  detailUser(userId: string): Promise<IUserResponse | null>;
 }

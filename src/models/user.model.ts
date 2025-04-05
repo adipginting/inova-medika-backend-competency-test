@@ -22,7 +22,6 @@ const UserSchema = new Schema<IUserDocument>({
     type: String,
     required: true,
     unique: true,
-    lowercase: true,
   },
   status: {
     type: String,

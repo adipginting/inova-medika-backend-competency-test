@@ -36,7 +36,7 @@ describe("test utils/validate-create-user.util.ts", () => {
     expect(() => validateCreateUser(userDto)).to.throw("Password is required");
   });
 
-  it("should throw an error if password is empty", () => {
+  it("should throw an error if gender is empty", () => {
     const userDto: UserDTO = {
       username: "test",
       name: "test",
@@ -46,18 +46,4 @@ describe("test utils/validate-create-user.util.ts", () => {
     };
     expect(() => validateCreateUser(userDto)).to.throw("Gender is required");
   });
-
-  // it("should throw an error if email is duplicate", () => {
-  //   const userDto: UserDTO = {
-  //     username: "test",
-  //     name: "test",
-  //     email: "test@test.com",
-  //     gender: "",
-  //     password: "test",
-  //   };
-
-  //   expect(() => validateCreateUser(userDto)).to.throw("Email is duplicate");
-  // });
-
-
 });

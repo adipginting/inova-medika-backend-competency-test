@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { UserDTO } from "../../src/dtos/user.dto";
 import { validateUpdateUser } from "../../src/utils/validate-update-user.util";
 
-describe("test utils/validate-create-user.util.ts", () => {
+describe("test utils/validate-update-user.util.ts", () => {
   it("should throw an error if email is empty", () => {
     const userDto: UserDTO = {
       name: "test",

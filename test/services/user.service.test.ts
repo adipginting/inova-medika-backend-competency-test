@@ -5,10 +5,11 @@ import sinonChai from "sinon-chai";
 import { UserService } from "../../src/services/user.service";
 import { UserRepository } from "../../src/repositories/user.repository";
 import { UserDTO } from "../../src/dtos/user.dto";
+import { IUserResponse } from "../../src/interfaces/userResponse.interface";
 
 chai.use(sinonChai);
 
-describe("UserRepository", () => {
+describe("User Service", () => {
   let mockUserDto: UserDTO;
 
   let mockUserRepository: sinon.SinonStubbedInstance<UserRepository>;
@@ -44,7 +45,7 @@ describe("UserRepository", () => {
       );
     });
 
-    it("should return true if user generated", async () => {
+    it("should return true if user created", async () => {
       mockUserRepository.createUser.resolves(true);
 
       const result = await userService.createUser(mockUserDto);
@@ -55,6 +56,49 @@ describe("UserRepository", () => {
       mockUserRepository.updateUser.resolves(true);
       const result = await userService.updateUser(mockUserDto);
       expect(result).to.be.true;
+    });
+
+    it("should list users", async () => {
+      const mockUserResponse: IUserResponse[] = [
+        {
+          id: "test-1",
+          username: "test1",
+          name: "test",
+          email: "test1@test.com",
+          gender: "male",
+
+          status: "active",
+        },
+        {
+          id: "test-2",
+          username: "test2",
+          name: "test",
+          email: "test2@test.com",
+          gender: "male",
+          status: "active",
+        },
+      ];
+
+      mockUserRepository.listUsers.resolves(mockUserResponse);
+      const result = await userService.listUsers(2, 0);
+      expect(result).to.be.deep.equal(mockUserResponse);
+      expect(mockUserRepository.listUsers).to.have.been.calledOnceWith(2, 0);
+    });
+
+    it("should return user", async () => {
+      const mockUserResponse: IUserResponse = {
+        id: "test-1",
+        username: "test1",
+        name: "test",
+        email: "test1@test.com",
+        gender: "male",
+        status: "active",
+      };
+
+      mockUserRepository.detailUser.resolves(mockUserResponse);
+      const result = await userService.detailUser("test-1");
+      expect(result).to.be.deep.equal(mockUserResponse);
+      expect(mockUserRepository.detailUser).to.have.been.calledOnceWith("test-1");
     });
   });
 });

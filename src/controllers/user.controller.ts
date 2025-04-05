@@ -93,4 +93,61 @@ export class UserController {
       });
     }
   }
+
+  public async listUsers(req: Request, res: Response) {
+    try {
+      const { limit, offset } = req.params;
+      const users = await this.userService.listUsers(
+        Number(limit) || 10,
+        Number(offset) || 0
+      );
+      if (users) {
+        res.status(200).json({
+          success: true,
+          message: "Users found.",
+          data: users,
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "No users found.",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message:
+          error instanceof Error ? error.message : "An unknown error occured.",
+      });
+    }
+  }
+
+  public async detailUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const user = await this.userService.detailUser(
+        id
+      );
+      if (user) {
+        res.status(200).json({
+          success: true,
+          message: "User found.",
+          data: user,
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "No user found.",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message:
+          error instanceof Error ? error.message : "An unknown error occured.",
+      });
+    }
+  }
+
+
 }
