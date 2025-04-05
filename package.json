@@ -1,0 +1,50 @@
+{
+  "name": "backend-test",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha test/**/*.test.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts ",
+    "build": "tsc",
+    "lint": "eslint 'src/**/*.ts'",
+    "start": "node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adipginting/inova-medika-backend-competency-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adipginting/inova-medika-backend-competency-test/issues"
+  },
+  "homepage": "https://github.com/adipginting/inova-medika-backend-competency-test#readme",
+  "description": "",
+  "dependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.9",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^5.2.1",
+    "@types/express": "^5.0.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.14.0",
+    "@types/sinon": "^17.0.4",
+    "@types/sinon-chai": "^4.0.0",
+    "@types/supertest": "^6.0.3",
+    "eslint": "^9.23.0",
+    "mocha": "^11.1.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.3",
+    "sinon-chai": "^4.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
